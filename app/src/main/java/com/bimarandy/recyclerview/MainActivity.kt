@@ -1,7 +1,12 @@
 package com.bimarandy.recyclerview
 
+import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Window
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import com.bimarandy.recyclerview.adapter.AdapterTemBola
 import com.bimarandy.recyclerview.databinding.ActivityMainBinding
 import com.bimarandy.recyclerview.model.Pemain
@@ -48,7 +53,35 @@ class MainActivity : AppCompatActivity() {
 
         binding.list.adapter = AdapterTemBola(this, listPemain,object : AdapterTemBola.OnClickListener{
             override fun detailData(item: Pemain?) {
-                TODO("Not yet implemented")
+                Dialog(this@MainActivity).apply {
+                    requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    setCancelable(true)
+                    setContentView(R.layout.detail_data_pemain)
+
+                    val image = this.findViewById<ImageView>(R.id.image_pemain)
+                    val nama = this.findViewById<TextView>(R.id.txtNamaPemain)
+                    val nickname = this.findViewById<TextView>(R.id.txtNickname)
+                    val tgllahir = this.findViewById<TextView>(R.id.txtTanggalLahir)
+                    val tempatlahir = this.findViewById<TextView>(R.id.txtTempatLahir)
+                    val umur = this.findViewById<TextView>(R.id.txtUmur)
+                    val tinggi = this.findViewById<TextView>(R.id.txtTinggi)
+                    val posisi = this.findViewById<TextView>(R.id.txtPosisi)
+                    val btn = this.findViewById<Button>(R.id.btnClose)
+
+                    image.setImageResource(item?.foto ?:0)
+                    nama.text = "${item?.nama}"
+                    nickname.text = "${item?.nickname}"
+                    tgllahir.text = "${item?.tgllahir}"
+                    tempatlahir.text = "${item?.tempatlahir}"
+                    umur.text = "${item?.umur}"
+                    tinggi.text = "${item?.tinggi}"
+                    posisi.text = "${item?.posisi}"
+
+                    btn.setOnClickListener {
+                        this.dismiss()
+                    }
+
+                }.show()
             }
 
         })
